@@ -5,7 +5,7 @@ An upBoard widget to show Google Analytics Users Time report
 ## Installation
 
 ```
-git clone https://github.com/chesnok9/ga-users-time-widget
+git clone https://github.com/webdevcrazier/user-time-widget
 cd ga-users-time-widget
 npm install
 ```
