@@ -10,15 +10,41 @@ cd ga-users-time-widget
 npm install
 ```
 
-Edit /src/components/GAUsersTimeWidget/GAUsersTimeWidget.js and change [client-id] and [view-id] by your values:
+Widget parameters passed from upBoard:
 ```
-...
-// Google ClientID
-const CLIENT_ID = "[client-id]"
+constructor(props) {
+    super(props);
+    this.state = {
+      ...
+      client_id: this.props.clientID, // Google Client ID
+      view_id: `ga:${this.props.viewID}`, // Google View ID
+      ...
+    }
+  }
+```
 
-// Google View ID
-const ids = "ga:[view-id]"
-...
+To test locally edit /src/components/widgetComponent/widgetComponent.js and change [client-id] and [view-id] by your values:
+```
+    ...
+
+    render() {
+
+        ...
+
+        if (this.state.isComponentDone) {
+            widgetWrapper = <TextWidget
+                clientID="[client-id]"
+                viewID="[view-id]"
+                changeWidgetText={this.props.changeWidgetText}
+                widgetStyle={this.props.widgetStyle}
+                widgetText={this.props.widgetText}
+                mode={this.props.mode}
+            />
+        }
+
+        ...
+
+    }
 ```
 
 Run the service at one command window:

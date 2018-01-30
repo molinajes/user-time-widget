@@ -28,6 +28,8 @@ export default class WidgetComponent extends Component {
 
         if (this.state.isComponentDone) {
         	widgetWrapper = <TextWidget
+						clientID="[client-id]"
+						viewID="[view-id]"
         		changeWidgetText={this.props.changeWidgetText}
 	        	widgetStyle={this.props.widgetStyle}
 	        	widgetText={this.props.widgetText}

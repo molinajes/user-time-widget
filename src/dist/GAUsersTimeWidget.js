@@ -19086,14 +19086,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   };
 })(window, document, "script");
 
-// Google ClientID
-// const CLIENT_ID = "[client-id]"
-var CLIENT_ID = "794561760101-j7k0bl1idfbfs8gqd3e40u7gal04nn79.apps.googleusercontent.com";
-
-// Google View ID
-// const ids = "ga:[view-id]"
-var ids = "ga:166794794";
-
 // Options for a GoogleCharts
 var options = {
   title: 'Time users spend on page',
@@ -19128,7 +19120,7 @@ definejs('GAUsersTimeWidget', function create() {
           _this.init = function () {
             var doAuth = function doAuth() {
               gapi.analytics.auth && gapi.analytics.auth.authorize({
-                clientid: CLIENT_ID,
+                clientid: _this.state.client_id,
                 container: _this.authButtonNode
               });
             };
@@ -19149,33 +19141,33 @@ definejs('GAUsersTimeWidget', function create() {
             var self = _this;
 
             // Metrics for GA queries
-            var metrics = ['timeOnPage', 'avgSessionDuration', 'avgTimeOnPage'];
+            var attr = ['timeOnPage', 'avgSessionDuration', 'avgTimeOnPage'];
 
-            var DAU = query({
-              'ids': ids,
+            var query1 = query({
+              'ids': _this.state.view_id,
               'dimensions': 'ga:date',
-              'metrics': 'ga:' + metrics[0],
+              'metrics': 'ga:' + attr[0],
               'start-date': '30daysAgo',
               'end-date': 'yesterday'
             });
 
-            var WAU = query({
-              'ids': ids,
+            var query2 = query({
+              'ids': _this.state.view_id,
               'dimensions': 'ga:date',
-              'metrics': 'ga:' + metrics[1],
+              'metrics': 'ga:' + attr[1],
               'start-date': '30daysAgo',
               'end-date': 'yesterday'
             });
 
-            var MAU = query({
-              'ids': ids,
+            var query3 = query({
+              'ids': _this.state.view_id,
               'dimensions': 'ga:date',
-              'metrics': 'ga:' + metrics[2],
+              'metrics': 'ga:' + attr[2],
               'start-date': '30daysAgo',
               'end-date': 'yesterday'
             });
 
-            Promise.all([DAU, WAU, MAU]).then(function (results) {
+            Promise.all([query1, query2, query3]).then(function (results) {
 
               var data1 = results[0].rows.map(function (row) {
                 return +row[1];
@@ -19202,6 +19194,8 @@ definejs('GAUsersTimeWidget', function create() {
             isEditing: _this.props.mode == 'edit' ? true : false,
             ready: false,
             activeAttr: 0,
+            client_id: _this.props.clientID, // Google Client ID
+            view_id: 'ga:' + _this.props.viewID, // Google View ID
             rows: [['', 0, 0, 0]]
           };
           return _this;
